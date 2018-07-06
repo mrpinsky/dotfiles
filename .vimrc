@@ -79,9 +79,6 @@ Plug 'vim-scripts/greplace.vim'
 Plug 'dewyze/vim-ruby-block-helpers'
 Plug 'thoughtbot/vim-rspec'
   let g:rspec_command = "Dispatch bin/rspec {spec}"
-Plug 'vim-scripts/SQLUtilities'
-  let g:sqlutil_load_default_maps = 0
-  command! -range -nargs=* SQLFormat <line1>,<line2> call SQLUtilities#SQLU_Formatter(<q-args>)
 call plug#end()
 
 " Don't use Ex mode, use Q for formatting
