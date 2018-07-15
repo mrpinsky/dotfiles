@@ -7,6 +7,11 @@ alias bes="bundle exec foreman start"
 
 alias dc="docker-compose"
 
+alias grm="git rebase origin/master"
+alias grmi="git rebase origin/master -i"
+alias gfrm="git fetch && git rebase origin/master"
+alias gfrmi="git fetch && git rebase origin/master -i"
+
 alias pe="pollev"
 alias prodc="pollev exec -e production -t puma_general -c 'bundle exec rails console'"
 alias stagingc="pollev exec -e staging -t puma_general -c 'bundle exec rails console'"
