@@ -2,7 +2,7 @@
 call plug#begin('~/.vim/plugged')
 
 Plug 'elmcast/elm-vim', { 'for': ['vim'] }
-  let g:elm_setup_keybindings = 0
+  let g:elm_setup_keybindings=0
   nnoremap \m :w<CR><Plug>(elm-make)
   nnoremap \e <Plug>(elm-error-detail)
   nnoremap \f <Plug>(elm-format)
@@ -10,15 +10,16 @@ Plug 'elmcast/elm-vim', { 'for': ['vim'] }
   nnoremap \t <Plug>(elm-test)
 Plug 'vim-airline/vim-airline'
   " Show linter status in airline bar
-  let g:airline#extensions#ale#enabled = 1
+  let g:airline#extensions#ale#enabled=1
   " keep sign gutter open at all times
-  let g:ale_sign_column_always = 1
-  let g:ale_linters = {'haskell': ['stack-build']}
+  let g:ale_sign_column_always=1
+  let g:ale_linters={'haskell': ['stack-build', 'hlint', 'hdevtools']}
 Plug 'vim-airline/vim-airline-themes'
+Plug 'w0rp/ale'
 Plug 'mileszs/ack.vim'
   nnoremap \a :Ack!<space>
   if executable('ag')
-    let g:ackprg = 'ag --vimgrep'
+    let g:ackprg='ag --vimgrep'
   endif
 
 Plug '/usr/local/opt/fzf'
@@ -160,6 +161,9 @@ set shiftwidth=2
 set softtabstop=2
 set textwidth=80
 set list
+if expand('%:e') =~ "zsh-theme"
+  set ft=zsh
+endif
 
 " Disable output and VCS files
 set wildignore+=*.o,*.out,*.obj,.git,*.rbc,*.rbo,*.class,.svn,*.gem
@@ -229,7 +233,7 @@ function! HaskellSupport()
   nnoremap <Leader>htc :GhcModTypeClear<cr>
   " May only work with custom fork of w0rp/ale
   " See https://monicalent.com/blog/2017/11/19/haskell-in-vim/
-  nnoremap <buffer> <leader>? :call ale#cursor#ShowCursorDetail()<cr>
+  " nnoremap <buffer> <leader>? :call ale#cursor#ShowCursorDetail()<cr>
 endfunction
 
 function! UnderscoreSupport()
