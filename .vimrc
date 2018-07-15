@@ -79,6 +79,8 @@ Plug 'vim-scripts/greplace.vim'
 Plug 'dewyze/vim-ruby-block-helpers'
 Plug 'thoughtbot/vim-rspec'
   let g:rspec_command = "Dispatch bin/rspec {spec}"
+Plug 'eagletmt/ghcmod-vim'
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 call plug#end()
 
 " Don't use Ex mode, use Q for formatting
