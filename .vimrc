@@ -16,6 +16,11 @@ Plug 'vim-airline/vim-airline'
   let g:ale_linters = {'haskell': ['stack-build']}
 Plug 'vim-airline/vim-airline-themes'
 Plug 'mileszs/ack.vim'
+  nnoremap \a :Ack!<space>
+  if executable('ag')
+    let g:ackprg = 'ag --vimgrep'
+  endif
+
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
   " Mapping selecting mappings
@@ -29,6 +34,7 @@ Plug 'junegunn/fzf.vim'
   imap <c-x><c-j> <plug>(fzf-complete-file-ag)
   imap <c-x><c-l> <plug>(fzf-complete-line)
 Plug 'scrooloose/nerdtree'
+  let g:NERDTreeShowHidden=1
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-eunuch'
@@ -84,12 +90,12 @@ Plug 'eagletmt/ghcmod-vim'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 call plug#end()
 
-" Don't use Ex mode, use Q for formatting
-map Q gq
-
-" CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
-" so that you can undo CTRL-U after inserting a line break.
-inoremap <C-U> <C-G>u<C-U>
+" Load all plugins now
+" Plugins need to be added to runtimepath berfore helptags can be generated
+packloadall
+" Load all of the helptags now, after plugins have been loaded.
+" All messages and errors will be ignored
+silent! helptags ALL
 
 " In many terminal emulators the mouse works just fine, thus enable it.
 if has('mouse')
@@ -98,7 +104,6 @@ endif
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
-
   " Enable file type detection.
   " Use the default filetype settings, so that mail gets 'tw' set to 72,
   " 'cindent' is on in C files, etc.
@@ -118,7 +123,6 @@ if has("autocmd")
     \ endif
 
   augroup END
-
 endif " has("autocmd")
 
 if has('langmap') && exists('+langnoremap')
@@ -127,13 +131,6 @@ if has('langmap') && exists('+langnoremap')
   " compatible).
   set langnoremap
 endif
-
-" Load all plugins now
-" Plugins need to be added to runtimepath berfore helptags can be generated
-packloadall
-" Load all of the helptags now, after plugins have been loaded.
-" All messages and errors will be ignored
-silent! helptags ALL
 
 " Use Vim settings, rather than Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
@@ -164,13 +161,6 @@ set softtabstop=2
 set textwidth=80
 set list
 
-if executable('ag')
-  let g:ackprg = 'ag --vimgrep'
-endif
-nnoremap \a :Ack!<space>
-
-let g:NERDTreeShowHidden=1
-
 " Disable output and VCS files
 set wildignore+=*.o,*.out,*.obj,.git,*.rbc,*.rbo,*.class,.svn,*.gem
 " Disable archive files
@@ -198,6 +188,13 @@ set iskeyword+=- "add dash to keywords (for e, b, *)
 
 let g:mapleader=','
 
+" Don't use Ex mode, use Q for formatting
+map Q gq
+
+" CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
+" so that you can undo CTRL-U after inserting a line break.
+inoremap <C-U> <C-G>u<C-U>
+
 ",n toggle NERDTree
 nnoremap <leader>n :NERDTreeToggle<CR>
 
@@ -221,10 +218,19 @@ nnoremap <C-n> :call ToggleNumbers()<CR>
 autocmd FileType cucumber,ruby,yaml,eruby,coffee,elm autocmd BufWritePre <buffer> :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\s\\+$","","")'))
 
 autocmd FileType elm,haskell setlocal expandtab shiftwidth=4 softtabstop=4
+autocmd FileType haskell call HaskellSupport()
 autocmd FileType ruby,javascript,c setlocal expandtab shiftwidth=2 softtabstop=2
 autocmd Filetype javascript,c,ruby call CStyleSyntaxHelpers()
 autocmd Filetype ruby,erb,haml call LoadRubyMaps()
-autocmd Filetype c call UnderscoreSupport()
+autocmd Filetype c,elixir call UnderscoreSupport()
+
+function! HaskellSupport()
+  nnoremap <Leader>ht :GhcModType<cr>
+  nnoremap <Leader>htc :GhcModTypeClear<cr>
+  " May only work with custom fork of w0rp/ale
+  " See https://monicalent.com/blog/2017/11/19/haskell-in-vim/
+  nnoremap <buffer> <leader>? :call ale#cursor#ShowCursorDetail()<cr>
+endfunction
 
 function! UnderscoreSupport()
   nmap <Leader>c ct_
