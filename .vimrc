@@ -1,6 +1,11 @@
+let g:mapleader=','
+" TEMP HACK: https://github.com/vim/vim/issues/3117
+silent! python3 1
+
 " vim-plug
 call plug#begin('~/.vim/plugged')
 
+Plug 'altercation/vim-colors-solarized'
 Plug 'elmcast/elm-vim', { 'for': ['vim'] }
   let g:elm_setup_keybindings=0
   nnoremap \m :w<CR><Plug>(elm-make)
@@ -49,6 +54,7 @@ Plug 'tpope/vim-characterize'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-haml'
 Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-dispatch'
   let g:dispatch_quickfix_height=20
   let g:dispatch_tmux_height=30
@@ -81,14 +87,14 @@ Plug 'talek/obvious-resize'
   nnoremap <silent> <DOWN> :<C-U>ObviousResizeDown<CR>
   nnoremap <silent> <UP> :<C-U>ObviousResizeUp<CR>
 Plug 'andrewradev/splitjoin.vim'
-Plug 'alfredodeza/jacinto.vim'
 Plug 'vim-scripts/greplace.vim'
 Plug 'dewyze/vim-ruby-block-helpers'
 Plug 'thoughtbot/vim-rspec'
   let g:rspec_command = "Dispatch bin/rspec {spec}"
-Plug 'altercation/vim-colors-solarized'
 Plug 'eagletmt/ghcmod-vim'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+Plug 'elixir-editors/vim-elixir'
+Plug 'm1foley/vim-pivotal-tracker-jump'
 call plug#end()
 
 " Load all plugins now
@@ -99,9 +105,9 @@ packloadall
 silent! helptags ALL
 
 " In many terminal emulators the mouse works just fine, thus enable it.
-if has('mouse')
-  set mouse=a
-endif
+" if has('mouse')
+"   set mouse=a
+" endif
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
@@ -156,6 +162,7 @@ set winminheight=0
 set number
 set noswapfile
 set nobackup
+set nowrap
 set expandtab
 set shiftwidth=2
 set softtabstop=2
@@ -190,8 +197,6 @@ set smartcase " ... unless they contain at least one capital letter
 
 set iskeyword+=- "add dash to keywords (for e, b, *)
 
-let g:mapleader=','
-
 " Don't use Ex mode, use Q for formatting
 map Q gq
 
@@ -215,6 +220,8 @@ nnoremap B :Buffers<CR>
 nnoremap <Leader>r :Tags<CR>
 nnoremap <Leader>t :Files<CR>
 nnoremap <Leader>a :Ag<CR>
+" ,j format JSON
+nnoremap <Leader>j :%!python -c "import json, sys, collections; print json.dumps(json.load(sys.stdin, object_pairs_hook=collections.OrderedDict), indent=2)"<CR>:%s/\s\+$//e<CR>:set filetype=json<CR>
 " Line numbers
 nnoremap <C-n> :call ToggleNumbers()<CR>
 
@@ -226,7 +233,7 @@ autocmd FileType haskell call HaskellSupport()
 autocmd FileType ruby,javascript,c setlocal expandtab shiftwidth=2 softtabstop=2
 autocmd Filetype javascript,c,ruby call CStyleSyntaxHelpers()
 autocmd Filetype ruby,erb,haml call LoadRubyMaps()
-autocmd Filetype c,elixir call UnderscoreSupport()
+autocmd Filetype c,elixir,eelixir call UnderscoreSupport()
 
 function! HaskellSupport()
   nnoremap <Leader>ht :GhcModType<cr>
@@ -264,8 +271,8 @@ function! LoadRubyMaps()
   " ,: update Ruby hash syntax
   vnoremap <silent> <Leader>: :ChangeHashSyntax<CR>
   " ,j ,k jump to next/previous method
-  nmap <Leader>j ]m
-  nmap <Leader>k [m
+  nmap <Leader>jm ]m
+  nmap <Leader>km [m
   " ,m memoize a Ruby method
   nmap <Leader>m [mwy$oreturn @0 if defined?(@0)jI@0 = l
   call RspecDispatch()

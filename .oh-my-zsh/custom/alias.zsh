@@ -21,3 +21,5 @@ alias tn="tmux new"
 alias tnt="tmux new -t"
 alias ta="tmux attach"
 alias tat="tmux attach -t"
+
+alias vim="/usr/local/bin/vim"
