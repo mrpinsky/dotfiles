@@ -6,7 +6,7 @@ silent! python3 1
 call plug#begin('~/.vim/plugged')
 
 Plug 'altercation/vim-colors-solarized'
-Plug 'elmcast/elm-vim', { 'for': ['vim'] }
+Plug 'elmcast/elm-vim', { 'for': ['elm'] }
   let g:elm_setup_keybindings=0
   nnoremap \m :w<CR><Plug>(elm-make)
   nnoremap \e <Plug>(elm-error-detail)
@@ -95,6 +95,9 @@ Plug 'eagletmt/ghcmod-vim'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'elixir-editors/vim-elixir'
 Plug 'm1foley/vim-pivotal-tracker-jump'
+Plug 'mhinz/vim-mix-format', { 'for': ['elixir'] }
+  let g:mix_format_on_save = 1
+  let g:mix_format_options = '--check-equivalent'
 call plug#end()
 
 " Load all plugins now
@@ -162,7 +165,6 @@ set winminheight=0
 set number
 set noswapfile
 set nobackup
-set nowrap
 set expandtab
 set shiftwidth=2
 set softtabstop=2
@@ -234,6 +236,7 @@ autocmd FileType ruby,javascript,c setlocal expandtab shiftwidth=2 softtabstop=2
 autocmd Filetype javascript,c,ruby call CStyleSyntaxHelpers()
 autocmd Filetype ruby,erb,haml call LoadRubyMaps()
 autocmd Filetype c,elixir,eelixir call UnderscoreSupport()
+autocmd Filetype elixir call ExUnitDispatch()
 
 function! HaskellSupport()
   nnoremap <Leader>ht :GhcModType<cr>
@@ -263,6 +266,15 @@ function! RspecDispatch()
   map <Leader>fs :let g:rspec_command.=' --fail-fast' \| call RunNearestSpec() \| let g:rspec_command=join(split(g:rspec_command)[0:-2])<CR>
   map <Leader>l :call RunLastSpec()<CR>
   map <Leader>fl :let g:rspec_command.=' --fail-fast' \| call RunLastSpec() \| let g:rspec_command=join(split(g:rspec_command)[0:-2])<CR>
+endfunction
+
+function! ExUnitDispatch()
+  " ,s spec line
+  nnoremap <Leader>s :Dispatch mix test <C-r>=expand("%:p")<CR>:<C-r>=line(".")<CR><CR>
+  " ,S spec file
+  nnoremap <Leader>S :Dispatch mix test <C-r>=expand("%:p")<CR><CR>
+  " " ,L spec file only failures
+  " nnoremap <Leader>L :Dispatch bin/rspec <C-r>=expand("%:p")<CR> --only-failures --fail-fast --format doc<CR>
 endfunction
 
 function! LoadRubyMaps()
