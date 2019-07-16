@@ -6,13 +6,13 @@ silent! python3 1
 call plug#begin('~/.vim/plugged')
 
 Plug 'altercation/vim-colors-solarized'
-Plug 'elmcast/elm-vim', { 'for': ['elm'] }
-  let g:elm_setup_keybindings=0
-  nnoremap \m :w<CR><Plug>(elm-make)
-  nnoremap \e <Plug>(elm-error-detail)
-  nnoremap \f <Plug>(elm-format)
-  nnoremap \d <Plug>(elm-oracle)
-  nnoremap \t <Plug>(elm-test)
+" Plug 'elmcast/elm-vim', { 'for': ['elm'] }
+"   let g:elm_setup_keybindings=0
+"   nnoremap \m :w<CR><Plug>(elm-make)
+"   nnoremap \e <Plug>(elm-error-detail)
+"   nnoremap \f <Plug>(elm-format)
+"   nnoremap \d <Plug>(elm-oracle)
+"   nnoremap \t <Plug>(elm-test)
 Plug 'vim-airline/vim-airline'
   " Show linter status in airline bar
   let g:airline#extensions#ale#enabled=1
@@ -21,11 +21,17 @@ Plug 'vim-airline/vim-airline'
   let g:ale_linters={'haskell': ['stack-build', 'hlint', 'hdevtools']}
 Plug 'vim-airline/vim-airline-themes'
 Plug 'w0rp/ale'
-Plug 'mileszs/ack.vim'
-  nnoremap \a :Ack!<space>
-  if executable('ag')
-    let g:ackprg='ag --vimgrep'
-  endif
+" Plug 'mileszs/ack.vim'
+"   nnoremap \a :Ack!<space>
+"   if executable('ag')
+"     let g:ackprg='ag --vimgrep'
+"   endif
+Plug 'mhinz/vim-grepper'
+  let g:grepper = {}
+  let g:grepper.tools = ['ag', 'git']
+  let g:grepper.operator = {'tools': g:grepper.tools}
+  nnoremap \a :Grepper<CR>
+  nmap <leader>g :Grepper -tool ag -cword -noprompt<CR>
 
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
@@ -43,6 +49,7 @@ Plug 'scrooloose/nerdtree'
   let g:NERDTreeShowHidden=1
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-bundler'
@@ -58,7 +65,13 @@ Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-dispatch'
   let g:dispatch_quickfix_height=20
   let g:dispatch_tmux_height=30
-Plug 'airblade/vim-gitgutter'
+" Plug 'airblade/vim-gitgutter'
+Plug 'mhinz/vim-signify'
+  let g:signify_vcs_list=['git']
+  let g:signify_realtime=1
+  let g:signify_cursorhold_normal=0
+  let g:signify_cursorhold_insert=0
+
 Plug 'justinmk/vim-gtfo'
 Plug 'vim-scripts/HTML-AutoCloseTag'
 Plug 'travisjeffery/vim-auto-mkdir'
@@ -71,8 +84,8 @@ Plug 'christoomey/vim-tmux-navigator'
   nnoremap <silent> <c-p> :TmuxNavigatePrevious<cr>
 
 Plug 'sheerun/vim-polyglot'
-  " elm-vim takes care of that
-  let g:polyglot_disabled = ['elm']
+  " " elm-vim takes care of that
+  " let g:polyglot_disabled = ['elm']
   " Disable weird Haskell indentation
   let g:haskell_indent_disable = 1
 Plug 'yggdroot/indentline'
@@ -124,8 +137,10 @@ if has("autocmd")
   augroup vimrcEx
   au!
 
+  autocmd BufReadPost * highlight SignColumn ctermbg=NONE cterm=NONE guibg=NONE gui=NONE
+  autocmd BufReadPost * highlight SignifySignAdd    cterm=bold ctermbg=2    ctermfg=4
+  autocmd BufReadPost * highlight SignifySignChange cterm=bold ctermbg=5    ctermfg=3
   " When editing a file, always jump to the last known cursor position.
-  " Don't do it when the position is invalid or when inside an event handler
   " (happens when dropping a file on gvim).
   autocmd BufReadPost *
     \ if line("'\"") >= 1 && line("'\"") <= line("$") |
@@ -207,7 +222,7 @@ map Q gq
 inoremap <C-U> <C-G>u<C-U>
 
 ",n toggle NERDTree
-nnoremap <leader>n :NERDTreeToggle<CR>
+nnoremap \n :NERDTreeToggle<CR>
 
 map <leader>rt :TagbarToggle<CR>
 
@@ -226,6 +241,11 @@ nnoremap <Leader>a :Ag<CR>
 nnoremap <Leader>j :%!python -c "import json, sys, collections; print json.dumps(json.load(sys.stdin, object_pairs_hook=collections.OrderedDict), indent=2)"<CR>:%s/\s\+$//e<CR>:set filetype=json<CR>
 " Line numbers
 nnoremap <C-n> :call ToggleNumbers()<CR>
+nnoremap s :Gstatus<CR>
+nmap <Leader>c ct_
+nmap <Leader>C c/[A-Z]<CR>
+nmap <Leader>d df_
+nmap <Leader>D d/[A-Z]<CR>
 
 "For these files, strip out trailing white space at the end of lines.
 autocmd FileType cucumber,ruby,yaml,eruby,coffee,elm autocmd BufWritePre <buffer> :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\s\\+$","","")'))
@@ -235,8 +255,7 @@ autocmd FileType haskell call HaskellSupport()
 autocmd FileType ruby,javascript,c setlocal expandtab shiftwidth=2 softtabstop=2
 autocmd Filetype javascript,c,ruby call CStyleSyntaxHelpers()
 autocmd Filetype ruby,erb,haml call LoadRubyMaps()
-autocmd Filetype c,elixir,eelixir call UnderscoreSupport()
-autocmd Filetype elixir call ExUnitDispatch()
+autocmd Filetype elixir call ElixirSupport()
 
 function! HaskellSupport()
   nnoremap <Leader>ht :GhcModType<cr>
@@ -244,13 +263,6 @@ function! HaskellSupport()
   " May only work with custom fork of w0rp/ale
   " See https://monicalent.com/blog/2017/11/19/haskell-in-vim/
   " nnoremap <buffer> <leader>? :call ale#cursor#ShowCursorDetail()<cr>
-endfunction
-
-function! UnderscoreSupport()
-  nmap <Leader>c ct_
-  nmap <Leader>C c/[A-Z]<CR>
-  nmap <Leader>d df_
-  nmap <Leader>D d/[A-Z]<CR>
 endfunction
 
 function! RspecDispatch()
@@ -262,10 +274,17 @@ function! RspecDispatch()
   " nnoremap <Leader>L :Dispatch bin/rspec <C-r>=expand("%:p")<CR> --only-failures --fail-fast --format doc<CR>
   map <Leader>S :call RunCurrentSpecFile()<CR>
   map <Leader>fS :let g:rspec_command.=' --fail-fast' \| call RunCurrentSpecFile() \| let g:rspec_command=join(split(g:rspec_command)[0:-2])<CR>
+  map <Leader>nS :let g:rspec_command.=' --next-failure' \| call RunCurrentSpecFile() \| let g:rspec_command=join(split(g:rspec_command)[0:-2])<CR>
   map <Leader>s :call RunNearestSpec()<CR>
   map <Leader>fs :let g:rspec_command.=' --fail-fast' \| call RunNearestSpec() \| let g:rspec_command=join(split(g:rspec_command)[0:-2])<CR>
   map <Leader>l :call RunLastSpec()<CR>
   map <Leader>fl :let g:rspec_command.=' --fail-fast' \| call RunLastSpec() \| let g:rspec_command=join(split(g:rspec_command)[0:-2])<CR>
+  map <Leader>nl :let g:rspec_command.=' --next-failure' \| call RunLastSpec() \| let g:rspec_command=join(split(g:rspec_command)[0:-2])<CR>
+endfunction
+
+function! ElixirSupport()
+  nmap <Leader>P Orequire IEx<CR>IEx.pry()<ESC>
+  call ExUnitDispatch()
 endfunction
 
 function! ExUnitDispatch()
@@ -288,7 +307,6 @@ function! LoadRubyMaps()
   " ,m memoize a Ruby method
   nmap <Leader>m [mwy$oreturn @0 if defined?(@0)jI@0 = l
   call RspecDispatch()
-  call UnderscoreSupport()
 endfunction
 
 function! CStyleSyntaxHelpers()

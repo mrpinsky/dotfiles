@@ -51,8 +51,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git command-not-found jsontools zsh-nvm)
-export NVM_AUTO_USE=true
+plugins=(git command-not-found jsontools rails nvm)
 
 source $ZSH/oh-my-zsh.sh
 

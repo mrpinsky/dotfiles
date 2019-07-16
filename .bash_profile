@@ -108,3 +108,5 @@ export EDITOR=vim
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 ssh-add -K ~/.ssh/id_rsa
 alias config='/usr/bin/git --git-dir=/Users/nate/.cfg/ --work-tree=/Users/nate'
+
+export PATH="$HOME/.cargo/bin:$PATH"
