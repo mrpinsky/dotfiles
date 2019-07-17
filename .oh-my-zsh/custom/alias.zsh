@@ -49,3 +49,8 @@ alias ta="tmux attach"
 alias tat="tmux attach -t"
 
 alias vim="/usr/local/bin/vim"
+
+alias zmv='noglob zmv'
+alias zcp='noglob zmv -C'
+alias zln='noglob zmv -L'
+alias zsy='noglob zmv -Ls'
