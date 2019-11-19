@@ -90,7 +90,7 @@ Plug 'sheerun/vim-polyglot'
   let g:haskell_indent_disable = 1
 Plug 'yggdroot/indentline'
   let g:indentLine_color_term = 239
-  let g:indentLine_char = '.'
+  let g:indentLine_char = '~'
   map <leader>i :IndentLinesToggle<CR>
 Plug 'talek/obvious-resize'
   " Arrow keys resize window

@@ -1,6 +1,4 @@
 function my_git_prompt() {
-  short_sha=$(git rev-parse --short HEAD 2> /dev/null) || return
-
   INDEX=$(command git status --porcelain 2> /dev/null)
   STATUS=""
 
@@ -45,7 +43,7 @@ function my_git_prompt() {
     STATUS="$STATUS %{$fg[blue]%}{$stash_count}%{$reset_colors%}"
   fi
 
-  echo "$ZSH_THEME_GIT_PROMPT_PREFIX$(my_current_branch) $(git_short_sha)$STATUS$ZSH_THEME_GIT_PROMPT_SUFFIX"
+  echo "$ZSH_THEME_GIT_PROMPT_PREFIX$(my_current_branch) %{$fg_no_bold[blue]%}($(git_short_sha))%{$reset_colors%}$STATUS$ZSH_THEME_GIT_PROMPT_SUFFIX"
 }
 
 function my_current_branch() {
@@ -53,7 +51,7 @@ function my_current_branch() {
 }
 
 function git_short_sha() {
-  SHA=$(git rev-parse --short HEAD 2> /dev/null) && echo "%{$fg_no_bold[blue]%}($SHA)%{$reset_colors%}"
+  echo $(git rev-parse --short HEAD 2> /dev/null)
 }
 
 local prompt_char="%(?:%{$fg_bold[green]%}:%{$fg_bold[red]%})%#%{$reset_color%}"

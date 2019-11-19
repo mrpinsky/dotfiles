@@ -11,11 +11,13 @@ alias bes="bundle exec foreman start"
 
 alias dc="docker-compose"
 
+alias git=/usr/local/bin/git
 alias grm="git rebase origin/master"
 alias grmi="git rebase origin/master -i"
 alias gfrm="git fetch && git rebase origin/master"
 alias gfrmi="git fetch && git rebase origin/master -i"
 alias gv="g hist | vim -R -c 'set filetype=git' -"
+alias gss="git rev-parse --short head 2> /dev/null"
 
 alias gig=gigalixir
 
@@ -27,14 +29,16 @@ alias mpsi="iex -S mix phx.server"
 
 alias pe="pollev"
 alias pesh="pollev sh -i"
+alias pd="pollev deploy"
+alias pdp="pollev deploy -e production"
 
-alias prodc="pollev exec -e production -t puma_general -c 'bundle exec rails console'"
-alias prods="pollev exec -e production -t puma_general -c 'bundle exec rails console --sandbox'"
-alias prodsh="pollev exec -e production -t puma_general -c bash"
+alias prodc="pollev exec -a rails-app -e production -t puma_general -c 'bundle exec rails console'"
+alias prods="pollev exec -a rails-app -e production -t puma_general -c 'bundle exec rails console --sandbox'"
+alias prodsh="pollev exec -a rails-app -e production -t puma_general -c bash"
 alias proddb="pollev database tunnel -p 3309 rails-app production"
 
 alias stagingc="pollev exec -e staging -t puma-general -c 'bundle exec rails console'"
-alias stagings="pollev exec -e production -t puma-general -c 'bundle exec rails console --sandbox'"
+alias stagings="pollev exec -e staging -t puma-general -c 'bundle exec rails console --sandbox'"
 alias stagingsh="pollev v2 app shell -a rails-app -e staging -n puma-general -s bash"
 alias stagingdb="pollev database tunnel -p 3309 rails-app staging"
 
