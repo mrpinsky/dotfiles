@@ -5,7 +5,8 @@ silent! python3 1
 " vim-plug
 call plug#begin('~/.vim/plugged')
 
-Plug 'altercation/vim-colors-solarized'
+" Plug 'altercation/vim-colors-solarized'
+Plug 'robertmeta/nofrils'
 " Plug 'elmcast/elm-vim', { 'for': ['elm'] }
 "   let g:elm_setup_keybindings=0
 "   nnoremap \m :w<CR><Plug>(elm-make)
@@ -21,14 +22,9 @@ Plug 'vim-airline/vim-airline'
   let g:ale_linters={'haskell': ['stack-build', 'hlint', 'hdevtools']}
 Plug 'vim-airline/vim-airline-themes'
 Plug 'w0rp/ale'
-" Plug 'mileszs/ack.vim'
-"   nnoremap \a :Ack!<space>
-"   if executable('ag')
-"     let g:ackprg='ag --vimgrep'
-"   endif
 Plug 'mhinz/vim-grepper'
-  let g:grepper = {}
-  let g:grepper.tools = ['ag', 'git']
+  let g:grepper = { 'next_tool': '<leader>a' }
+  let g:grepper.tools = ['ag', 'rg', 'git']
   let g:grepper.operator = {'tools': g:grepper.tools}
   nnoremap \a :Grepper<CR>
   nmap <leader>g :Grepper -tool ag -cword -noprompt<CR>
@@ -207,7 +203,8 @@ set guifont=Inconsolata_for_Powerline:h18
 set background=dark
 let g:airline_theme = "sol"
 let g:airline_powerline_fonts = 1
-colorscheme peachpuff
+" colorscheme peachpuff
+colorscheme nofrils-acme
 
 set ignorecase "searches are case insensitive...
 set smartcase " ... unless they contain at least one capital letter
@@ -250,7 +247,7 @@ nmap <Leader>D d/[A-Z]<CR>
 "For these files, strip out trailing white space at the end of lines.
 autocmd FileType cucumber,ruby,yaml,eruby,coffee,elm autocmd BufWritePre <buffer> :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\s\\+$","","")'))
 
-autocmd FileType elm,haskell setlocal expandtab shiftwidth=4 softtabstop=4
+autocmd FileType elm,haskell,cs setlocal expandtab shiftwidth=4 softtabstop=4
 autocmd FileType haskell call HaskellSupport()
 autocmd FileType ruby,javascript,c setlocal expandtab shiftwidth=2 softtabstop=2
 autocmd Filetype javascript,c,ruby call CStyleSyntaxHelpers()
