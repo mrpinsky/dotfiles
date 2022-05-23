@@ -1,112 +1,89 @@
 let g:mapleader=','
-" TEMP HACK: https://github.com/vim/vim/issues/3117
-silent! python3 1
 
 " vim-plug
 call plug#begin('~/.vim/plugged')
 
-" Plug 'altercation/vim-colors-solarized'
 Plug 'robertmeta/nofrils'
-" Plug 'elmcast/elm-vim', { 'for': ['elm'] }
-"   let g:elm_setup_keybindings=0
-"   nnoremap \m :w<CR><Plug>(elm-make)
-"   nnoremap \e <Plug>(elm-error-detail)
-"   nnoremap \f <Plug>(elm-format)
-"   nnoremap \d <Plug>(elm-oracle)
-"   nnoremap \t <Plug>(elm-test)
 Plug 'vim-airline/vim-airline'
   " Show linter status in airline bar
   let g:airline#extensions#ale#enabled=1
   " keep sign gutter open at all times
   let g:ale_sign_column_always=1
-  let g:ale_linters={'haskell': ['stack-build', 'hlint', 'hdevtools']}
 Plug 'vim-airline/vim-airline-themes'
 Plug 'w0rp/ale'
+let g:ale_enabled=1
+
 Plug 'mhinz/vim-grepper'
-  let g:grepper = { 'next_tool': '<leader>a' }
-  let g:grepper.tools = ['ag', 'rg', 'git']
-  let g:grepper.operator = {'tools': g:grepper.tools}
+  let g:grepper = { 'tools': ['ag'] }
   nnoremap \a :Grepper<CR>
-  nmap <leader>g :Grepper -tool ag -cword -noprompt<CR>
 
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
-  " Mapping selecting mappings
-  nmap <leader><tab> <plug>(fzf-maps-n)
-  xmap <leader><tab> <plug>(fzf-maps-x)
-  omap <leader><tab> <plug>(fzf-maps-o)
 
-  " Insert mode completion
-  imap <c-x><c-k> <plug>(fzf-complete-word)
-  imap <c-x><c-f> <plug>(fzf-complete-path)
-  imap <c-x><c-j> <plug>(fzf-complete-file-ag)
-  imap <c-x><c-l> <plug>(fzf-complete-line)
-Plug 'scrooloose/nerdtree'
-  let g:NERDTreeShowHidden=1
-Plug 'tpope/vim-rails'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rhubarb'
-Plug 'tpope/vim-eunuch'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-bundler'
-Plug 'tpope/vim-sensible'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-endwise', { 'for': ['ruby','sh'] }
-Plug 'tpope/vim-jdaddy'
-Plug 'tpope/vim-characterize'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-haml'
-Plug 'tpope/vim-abolish'
-Plug 'tpope/vim-projectionist'
-Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-fugitive' 	" Git commands
+Plug 'tpope/vim-rhubarb'        " Mostly for :Gbrowse
+Plug 'tpope/vim-eunuch'         " For Unix stuff: :Move, :Rename, etc
+Plug 'tpope/vim-commentary'     " :gc[c]
+" Plug 'tpope/vim-bundler'        " Call bundler utils from Vim
+Plug 'tpope/vim-sensible'       " 'Neutral ground' default settings
+Plug 'tpope/vim-surround'       " Surrounding motions
+Plug 'tpope/vim-endwise',       " Automatically add `end`s
+     \ { 'for': ['ruby','sh'] }
+Plug 'tpope/vim-jdaddy'         " Tim Pope handles JSON in vim!
+Plug 'tpope/vim-repeat'         " Make `.` work better with plugin commands
+Plug 'tpope/vim-abolish'        " Handle lexicographical variants: capitalization, pluralization, snake <-> camel
+Plug 'tpope/vim-projectionist'  " Provides :E, :S, :V, :T, :A, :AS, :AV, and :AT
+Plug 'tpope/vim-dispatch'       " Run a shell command in Tmux split, get results in quickfix
   let g:dispatch_quickfix_height=20
   let g:dispatch_tmux_height=30
-" Plug 'airblade/vim-gitgutter'
-Plug 'mhinz/vim-signify'
+
+Plug 'mhinz/vim-signify'        " Show diff status in gutter
   let g:signify_vcs_list=['git']
   let g:signify_realtime=1
   let g:signify_cursorhold_normal=0
   let g:signify_cursorhold_insert=0
 
-Plug 'justinmk/vim-gtfo'
-Plug 'vim-scripts/HTML-AutoCloseTag'
 Plug 'travisjeffery/vim-auto-mkdir'
+
+" Navigate tmux and vim splits with the same commands
 Plug 'christoomey/vim-tmux-navigator'
-  let g:tmux_navigator_no_mappings = 1
+  let g:tmux_navigator_no_mappings=1
   nnoremap <silent> <c-h> :TmuxNavigateLeft<cr>
   nnoremap <silent> <c-j> :TmuxNavigateDown<cr>
   nnoremap <silent> <c-k> :TmuxNavigateUp<cr>
   nnoremap <silent> <c-l> :TmuxNavigateRight<cr>
   nnoremap <silent> <c-p> :TmuxNavigatePrevious<cr>
 
+" Low-overhead language support
 Plug 'sheerun/vim-polyglot'
-  " " elm-vim takes care of that
-  " let g:polyglot_disabled = ['elm']
   " Disable weird Haskell indentation
-  let g:haskell_indent_disable = 1
+  let g:haskell_indent_disable=1
+  let g:polyglot_disabled = ['groovy']
+
+Plug 'fatih/vim-go'
+
+" Show indentation
 Plug 'yggdroot/indentline'
-  let g:indentLine_color_term = 239
-  let g:indentLine_char = '~'
-  map <leader>i :IndentLinesToggle<CR>
+  let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+
+" Use arrow keys to resize splits
 Plug 'talek/obvious-resize'
-  " Arrow keys resize window
   let g:obvious_resize_default=5
   nnoremap <silent> <LEFT> :<C-U>ObviousResizeLeft<CR>
   nnoremap <silent> <RIGHT> :<C-U>ObviousResizeRight<CR>
-  nnoremap <silent> <DOWN> :<C-U>ObviousResizeDown<CR>
   nnoremap <silent> <UP> :<C-U>ObviousResizeUp<CR>
+  nnoremap <silent> <DOWN> :<C-U>ObviousResizeDown<CR>
+
 Plug 'andrewradev/splitjoin.vim'
+
 Plug 'vim-scripts/greplace.vim'
-Plug 'dewyze/vim-ruby-block-helpers'
+Plug 'vim-scripts/HTML-AutoCloseTag'
+
+" Uncomment if I need to run RSpec often at Square
 Plug 'thoughtbot/vim-rspec'
-  let g:rspec_command = "Dispatch bin/rspec {spec}"
-Plug 'eagletmt/ghcmod-vim'
-Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-Plug 'elixir-editors/vim-elixir'
-Plug 'm1foley/vim-pivotal-tracker-jump'
-Plug 'mhinz/vim-mix-format', { 'for': ['elixir'] }
-  let g:mix_format_on_save = 1
-  let g:mix_format_options = '--check-equivalent'
+  let g:rspec_command = "Dispatch bundle exec rspec {spec}"
+  let g:rspec_runner = "os_x_iterm"
+
 call plug#end()
 
 " Load all plugins now
@@ -116,19 +93,8 @@ packloadall
 " All messages and errors will be ignored
 silent! helptags ALL
 
-" In many terminal emulators the mouse works just fine, thus enable it.
-" if has('mouse')
-"   set mouse=a
-" endif
-
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
-  " Enable file type detection.
-  " Use the default filetype settings, so that mail gets 'tw' set to 72,
-  " 'cindent' is on in C files, etc.
-  " Also load indent files, to automatically do language-dependent indenting.
-  filetype plugin indent on
-
   " Put these in an autocmd group, so that we can delete them easily.
   augroup vimrcEx
   au!
@@ -148,39 +114,26 @@ endif " has("autocmd")
 
 if has('langmap') && exists('+langnoremap')
   " Prevent that the langmap option applies to characters that result from a
-  " mapping.  If unset (default), this may break plugins (but it's backward
+  " mapping. If unset (default), this may break plugins (but it's backward
   " compatible).
   set langnoremap
 endif
 
-" Use Vim settings, rather than Vi settings (much better!).
-" This must be first, because it changes other options as a side effect.
+" Use Vim settings, rather than Vi
+" This must be first, because it changes other options as a side effect
 set nocompatible
-" allow backspacing over everything in insert mode
-set backspace=indent,eol,start
 set splitright
 set splitbelow
-set undolevels=1000
-set encoding=utf-8
-if has("vms")
-  set nobackup " do not keep a backup file, use versions instead
-else
-  set backup " keep a backup file (restore to previous version) set undofile		" keep an undo file (undo changes after closing)
-endif
-set history=50 " keep 50 lines of command line history
-set ruler " show the cursor position all the time
-set showcmd " display incomplete commands
-set incsearch " do incremental searching
 set mousehide
 set winminheight=0
 set number
 set noswapfile
-set nobackup
 set expandtab
 set shiftwidth=2
 set softtabstop=2
 set textwidth=80
 set list
+
 if expand('%:e') =~ "zsh-theme"
   set ft=zsh
 endif
@@ -191,61 +144,41 @@ set wildignore+=*.o,*.out,*.obj,.git,*.rbc,*.rbo,*.class,.svn,*.gem
 set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz
 " Ignore bundler and sass cache
 set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
-" Ignore librarian-chef, vagrant, test-kitchen and Berkshelf cache
-set wildignore+=*/tmp/librarian/*,*/.vagrant/*,*/.kitchen/*,*/vendor/cookbooks/*
-" Ignore rails temporary asset caches
-set wildignore+=*/tmp/cache/assets/*/sprockets/*,*/tmp/cache/assets/*/sass/*
 " Disable temp and backup files
 set wildignore+=*.swp,*~,._*
 set wildignore+=**/coverage/*,**/spec/reports/*,**/tmp/*,**/node_modules/*,**/build/*
 
 set guifont=Inconsolata_for_Powerline:h18
-set background=dark
 let g:airline_theme = "sol"
 let g:airline_powerline_fonts = 1
-" colorscheme peachpuff
-colorscheme nofrils-acme
+colorscheme nofrils-dark
 
-set ignorecase "searches are case insensitive...
-set smartcase " ... unless they contain at least one capital letter
+set ignorecase " searches are case insensitive
+set smartcase  " ... unless they contain at least one captial letter
 
-set iskeyword+=- "add dash to keywords (for e, b, *)
+set iskeyword+=- " add dash to keywords (used in motions)
 
-" Don't use Ex mode, use Q for formatting
-map Q gq
-
-" CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
-" so that you can undo CTRL-U after inserting a line break.
-inoremap <C-U> <C-G>u<C-U>
-
-",n toggle NERDTree
-nnoremap \n :NERDTreeToggle<CR>
-
-map <leader>rt :TagbarToggle<CR>
-
-" Shift-Y should copy to end of line, like Shift-D deletes to end of line
-noremap Y y$
 " gp selects last paste
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
+
 " don't lose register when pasting over
-vnoremap p pgvy
+vnoremap p gpvy
+
 " FZF Bindings
-nnoremap B :Buffers<CR>
-nnoremap <Leader>r :Tags<CR>
-nnoremap <Leader>t :Files<CR>
-nnoremap <Leader>a :Ag<CR>
-" ,j format JSON
-nnoremap <Leader>j :%!python -c "import json, sys, collections; print json.dumps(json.load(sys.stdin, object_pairs_hook=collections.OrderedDict), indent=2)"<CR>:%s/\s\+$//e<CR>:set filetype=json<CR>
-" Line numbers
+nnoremap <leader>t :Files<CR>
+nnoremap <leader>a :Rg<CR>
+
 nnoremap <C-n> :call ToggleNumbers()<CR>
-nnoremap s :Gstatus<CR>
-nmap <Leader>c ct_
-nmap <Leader>C c/[A-Z]<CR>
-nmap <Leader>d df_
-nmap <Leader>D d/[A-Z]<CR>
+
+nnoremap s :Git<CR>
+
+nmap <leader>c ct_
+nmap <leader>C c/[A-Z]<CR>
+nmap <leader>d df_
+nmap <leader>D d/[A-Z]<CR>
 
 "For these files, strip out trailing white space at the end of lines.
-autocmd FileType cucumber,ruby,yaml,eruby,coffee,elm autocmd BufWritePre <buffer> :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\s\\+$","","")'))
+" autocmd FileType cucumber,ruby,yaml,eruby,coffee,elm autocmd BufWritePre <buffer> :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\s\\+$","","")'))
 
 autocmd FileType elm,haskell,cs setlocal expandtab shiftwidth=4 softtabstop=4
 autocmd FileType haskell call HaskellSupport()
@@ -294,15 +227,15 @@ function! ExUnitDispatch()
 endfunction
 
 function! LoadRubyMaps()
-  " ,b remote pry
-  nnoremap <Leader>b Orequire 'pry'; binding.remote_pry<ESC>
-  " ,: update Ruby hash syntax
-  vnoremap <silent> <Leader>: :ChangeHashSyntax<CR>
-  " ,j ,k jump to next/previous method
-  nmap <Leader>jm ]m
-  nmap <Leader>km [m
-  " ,m memoize a Ruby method
-  nmap <Leader>m [mwy$oreturn @0 if defined?(@0)jI@0 = l
+  " " ,b remote pry
+  " nnoremap <Leader>b Orequire 'pry'; binding.remote_pry<ESC>
+  " " ,: update Ruby hash syntax
+  " vnoremap <silent> <Leader>: :ChangeHashSyntax<CR>
+  " " ,j ,k jump to next/previous method
+  " nmap <Leader>jm ]m
+  " nmap <Leader>km [m
+  " " ,m memoize a Ruby method
+  " nmap <Leader>m [mwy$oreturn @0 if defined?(@0)jI@0 = l
   call RspecDispatch()
 endfunction
 
@@ -319,22 +252,3 @@ function! ToggleNumbers()
     set norelativenumber
   endif
 endfunction
-
-" function! DeMorganize()
-"   let words = split(getline('.'))
-"   echo map(words, function('DeMorganizeWord'))
-" endfunction
-
-" function! DeMorganizeWord(index, word)
-"   if a:index == 0
-"     return "if"
-"   elseif a:word == "&&"
-"     return "||"
-"   elseif a:word == "||"
-"     return "&&"
-"   elseif a:word =~ "!\\(\\S\\+\\)"
-"     return substitute(a:word, "!\(\S\)+", "\\1")
-"   else
-"     return "!" . a:word
-"   endif
-" endfunction
