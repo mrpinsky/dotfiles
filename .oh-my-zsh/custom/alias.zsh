@@ -34,6 +34,10 @@ alias tnt="tmux new -At"
 alias ta="tmux attach"
 alias tat="tmux attach -t"
 
+function t() {
+  tmux new-session -A -c $1 -s $1
+}
+
 alias zmv='noglob zmv'
 alias zcp='noglob zmv -C'
 alias zln='noglob zmv -L'
