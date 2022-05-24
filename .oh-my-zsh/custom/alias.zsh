@@ -9,7 +9,7 @@ alias bes="bundle exec foreman start"
 
 alias dc="docker-compose"
 
-alias git=/usr/local/bin/git
+alias git="$(brew --prefix)/bin/git"
 alias g=git
 alias grm="git rebase origin/master"
 alias grmi="git rebase origin/master -i"
@@ -33,8 +33,6 @@ alias tn="tmux new"
 alias tnt="tmux new -At"
 alias ta="tmux attach"
 alias tat="tmux attach -t"
-
-alias vim="/usr/local/bin/vim"
 
 alias zmv='noglob zmv'
 alias zcp='noglob zmv -C'
