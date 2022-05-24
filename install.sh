@@ -24,8 +24,14 @@ pushd ~/fonts &> /dev/null
   ./install.sh
 popd
 
+### HOMEBREW """
+if ! which brew; then
+  NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+
 ### TMUX ###
 link_to_home .tmux.conf
+brew install tmux
 
 ### FZF ###
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf &>/dev/null
