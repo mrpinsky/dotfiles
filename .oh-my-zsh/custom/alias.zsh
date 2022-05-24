@@ -1,5 +1,3 @@
-alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
-
 alias be="bundle exec"
 alias ber="bundle exec rspec"
 alias berf="bundle exec rspec --fail-fast"
@@ -30,21 +28,6 @@ alias mtc="mix test --only current:true"
 alias mti="iex -S mix test --trace --only current:true"
 alias mps="mix phx.server"
 alias mpsi="iex -S mix phx.server"
-
-alias pe="pollev"
-alias pollev="nocorrect pollev"
-alias pesh="pollev sh -i"
-alias pd="pollev deploy"
-alias pdp="pollev deploy -e production"
-
-alias prodsh="pollev v2 app shell -a rails-app -e production -n puma-general -s bash"
-alias proddb="ssh prod-sql"
-
-alias stagingsh="pollev v2 app shell -a rails-app -e staging -n puma-general -s bash"
-alias stagingdb="pollev database tunnel -p 3309 rails-app staging"
-
-alias reviewsh="pollev v2 app shell -a rails-app -e review -n puma-general -s bash"
-alias reviewdb="pollev database tunnel -p 3309 rails-app review"
 
 alias tn="tmux new"
 alias tnt="tmux new -At"
