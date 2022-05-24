@@ -40,4 +40,4 @@ link_to_home .vimrc
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim &>/dev/null
 
 # Install 
-vim -u plugs.vim -c PlugInstall -c qa &>/dev/null
+vim -u ~/dotfiles/plugs.vim -c PlugInstall -c qa &>/dev/null
