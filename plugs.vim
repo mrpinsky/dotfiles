@@ -15,7 +15,7 @@ Plug 'mhinz/vim-grepper'
   let g:grepper = { 'tools': ['ag'] }
   nnoremap \a :Grepper<CR>
 
-Plug '/usr/local/opt/fzf'
+Plug '~/.fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 Plug 'tpope/vim-fugitive' 	" Git commands
