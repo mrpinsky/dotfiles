@@ -31,6 +31,9 @@ which brew || NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubuser
 link_to_home .tmux.conf
 brew install tmux
 
+### AG ###
+brew install ag
+
 ### FZF ###
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf &>/dev/null
 ~/.fzf/install --no-bash --no-fish --key-bindings --completion --no-update-rc

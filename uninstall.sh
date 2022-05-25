@@ -11,9 +11,10 @@ git config --global --unset
 # Uninstall FZF
 [[ -d ~/.fzf ]] && rm -rf ~/.fzf
 
-
 [[ -f ~/.tmux.conf ]] && rm ~/.tmux.conf
 brew uninstall tmux
+
+brew uninstall ag
 
 [[ -d ~/fonts ]] || git clone --depth 1 https://github.com/powerline/fonts.git ~/fonts
 pushd ~/fonts &> /dev/null
