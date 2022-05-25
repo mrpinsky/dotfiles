@@ -25,9 +25,7 @@ pushd ~/fonts &> /dev/null
 popd
 
 ### HOMEBREW """
-if ! which brew; then
-  NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-fi
+which brew || NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 ### TMUX ###
 link_to_home .tmux.conf
@@ -47,3 +45,5 @@ link_to_home .vimrc
 
 # Install 
 vim -u ~/dotfiles/plugs.vim -c PlugInstall -c qa &>/dev/null
+
+git config --global --add include.path "$HOME/dotfiles/gitconfig"

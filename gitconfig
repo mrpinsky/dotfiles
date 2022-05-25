@@ -1,0 +1,44 @@
+[push]
+	config = default
+	default = current
+[diff]
+	renames = true
+	indentHeuristic = on
+[status]
+	showUntrackedFiles = all
+[branch]
+	autosetupmerge = true
+[merge]
+	summary = true
+[rebase]
+	autosquash = true
+	autostash = true
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+	interactive = auto
+[rerere]
+	enabled = 1
+[pull]
+	rebase = true
+[commit]
+	verbose = true
+[stash]
+	showDiff = true
+	showStat = false
+[alias]
+	br = branch
+	ci = commit
+	ca = commit --amend
+	can = commit --amend --no-edit
+	cana = commit --amend --no-edit --all
+	caa = commit --amend --all
+	co = checkout
+	last = show --pretty=fuller
+	cleanup-branches = !sh -c 'git branch --merged | grep -v ^* | xargs -n 1 git branch -d'
+	pf = push --force-with-lease
+	st = status
+	pull = pull --prune
+	unmerged = !git status --porcelain | grep -e '^U' -e '^.U' | cut -d' ' -f2
+	resolve = !vim $(git unmerged)
