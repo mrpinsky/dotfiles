@@ -11,9 +11,9 @@ if [[ "$SHELL" =~ "zsh" ]]; then
   # Install Oh My Zsh
   git clone https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh &>/dev/null
 
-  link_to_home .zshrc
+  echo "source ~/dotfiles/.zshrc" >> ~/.zshrc
 elif [[ "$SHELL" =~ "bash" ]]; then
-  link_to_home .bash_profile
+  echo "source ~/dotfiles/.bash_profile" >> ~/.bash_profile
 else
   echo "Unknown shell $SHELL"
 fi
@@ -28,7 +28,7 @@ popd
 which brew || NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 ### TMUX ###
-link_to_home .tmux.conf
+echo "source-file ~/dotfiles/.tmux.conf" >> ~/.tmux.conf
 brew install tmux
 
 ### AG ###

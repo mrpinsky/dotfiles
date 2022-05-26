@@ -11,7 +11,10 @@ git config --global --unset
 # Uninstall FZF
 [[ -d ~/.fzf ]] && rm -rf ~/.fzf
 
-[[ -f ~/.tmux.conf ]] && rm ~/.tmux.conf
+if [[ -f ~/.tmux.conf ]]; then
+  grep -v "~/dotfiles/.tmux.conf" ~/.tmux.conf > ~/.tmux.conf.clean
+  mv ~/.tmux.conf.clean ~/.tmux.conf
+fi
 brew uninstall tmux
 
 brew uninstall ag
@@ -25,4 +28,12 @@ popd
 
 which brew && NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)"
 
-rm -rf ~/.zshrc ~/.oh-my-zsh ~/.bash_profile
+if [[ -f ~/.zshrc ]]; then
+  grep -v "~/dotfiles/.zshrc" ~/.zshrc > ~/.zshrc.clean
+  mv ~/.zshrc.clean ~/.zshrc
+fi
+if [[ ;f ~/.bash_profile ]]; then
+  grep -v "~/dotfiles/.bash_profile" ~/.bash_profile > ~/.bash_profile.clean
+  mv ~/.bash_profile.clean ~/.bash_profile
+fi
+rm -rf ~/.oh-my-zsh
