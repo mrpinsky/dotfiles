@@ -82,7 +82,7 @@ vnoremap p gpvy
 
 " FZF Bindings
 nnoremap <leader>t :Files<CR>
-nnoremap <leader>a :Rg<CR>
+nnoremap <leader>a :Ag<CR>
 
 nnoremap <C-n> :call ToggleNumbers()<CR>
 
