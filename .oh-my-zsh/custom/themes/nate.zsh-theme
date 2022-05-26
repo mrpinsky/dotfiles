@@ -54,7 +54,7 @@ function git_short_sha() {
   echo $(git rev-parse --short HEAD 2> /dev/null)
 }
 
-local prompt_char="%(?:%{$fg_bold[green]%}:%{$fg_bold[red]%})%#%{$reset_color%}"
+local prompt_char="%(?:%{$fg_bold[green]%}:%{$fg_bold[red]%})$%{$reset_color%}"
 PROMPT=$'\n%{$fg_bold[yellow]%}%*%{$reset_color%} %{$fg_bold[magenta]%}%1~%{$reset_color%} $(my_git_prompt) \n${prompt_char} '
 RPROMPT=""
 
