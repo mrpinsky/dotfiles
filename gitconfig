@@ -27,6 +27,8 @@
 [stash]
 	showDiff = true
 	showStat = false
+[init]
+	defaultBranch = main
 [alias]
 	br = branch
 	ci = commit
