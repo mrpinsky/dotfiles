@@ -34,6 +34,9 @@ brew install tmux
 ### AG ###
 brew install ag
 
+### GH ###
+brew install gh
+
 ### FZF ###
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf &>/dev/null
 ~/.fzf/install --no-bash --no-fish --key-bindings --completion --no-update-rc

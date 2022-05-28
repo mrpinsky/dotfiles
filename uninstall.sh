@@ -17,6 +17,7 @@ if [[ -f ~/.tmux.conf ]]; then
 fi
 brew uninstall tmux
 
+brew uninstall gh
 brew uninstall ag
 
 [[ -d ~/fonts ]] || git clone --depth 1 https://github.com/powerline/fonts.git ~/fonts
