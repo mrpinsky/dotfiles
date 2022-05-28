@@ -32,7 +32,7 @@ if [[ -f ~/.zshrc ]]; then
   grep -v "~/dotfiles/.zshrc" ~/.zshrc > ~/.zshrc.clean
   mv ~/.zshrc.clean ~/.zshrc
 fi
-if [[ ;f ~/.bash_profile ]]; then
+if [[ -f ~/.bash_profile ]]; then
   grep -v "~/dotfiles/.bash_profile" ~/.bash_profile > ~/.bash_profile.clean
   mv ~/.bash_profile.clean ~/.bash_profile
 fi
