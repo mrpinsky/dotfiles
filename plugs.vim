@@ -11,8 +11,6 @@ Plug 'vim-airline/vim-airline'
   let g:airline#extensions#ale#enabled=1
   " keep sign gutter open at all times
   let g:ale_sign_column_always=1
-  " Show all buffers when there's only one tab open
-  let g:airline#extensions#tabline#enabled = 1
   " Don't show file encoding & format if it's this string, since that's what we expect
   let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
   let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
