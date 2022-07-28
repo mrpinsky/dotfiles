@@ -38,7 +38,7 @@
 	caa = commit --amend --all
 	co = checkout
 	last = show --pretty=fuller
-	cleanup-branches = !sh -c 'git branch --merged | grep -v ^* | xargs -n 1 git branch -d'
+	cleanup-branches = !git branch --merged | grep -v ^* | xargs -n 1 git branch -d
 	pf = push --force-with-lease
 	st = status
 	pull = pull --prune
