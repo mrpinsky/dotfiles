@@ -44,3 +44,6 @@
 	pull = pull --prune
 	unmerged = !git status --porcelain | grep -e '^U' -e '^.U' | cut -d' ' -f2
 	resolve = !vim $(git unmerged)
+	pick-commit = !git log --oneline --grep="^fixup" --invert-grep | fzf | cut -f1 -d' '
+	fixup = !git commit --fixup=$(git pick-commit)
+	squash = !git commit --squash=$(git pick-commit)
