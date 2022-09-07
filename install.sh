@@ -58,6 +58,10 @@ brew install --quiet ag
 echo "GH"
 brew install --quiet gh
 
+### BAT ###
+echo "BAT"
+brew install --quiet bat
+
 ### FZF ###
 echo FZF
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf &>/dev/null
@@ -66,6 +70,8 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf &>/dev/null
 ### VIM ###
 echo VIM
 link_to_home .vimrc
+ln -sfv "$HOME/dotfiles/nvim" "$HOME/.config"
+brew install --quiet nvim
 
 # Install Vim Plug
 echo VIM PLUG
@@ -76,6 +82,11 @@ echo VIM PLUG
 # Install 
 echo PLUG INSTALL
 vim -u ~/dotfiles/plugs.vim -c PlugInstall -c qa &>/dev/null
+
+### KITTY CONF ###
+echo KITTY CONF
+ln -sfv "$HOME/dotfiles/kitty" "$HOME/.config"
+brew install --cask kitty
 
 echo GIT CONFIG
 git config --global --add include.path "$HOME/dotfiles/gitconfig"

@@ -17,6 +17,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'w0rp/ale'
 let g:ale_enabled=1
+let g:ale_floating_preview=1
 
 Plug 'mhinz/vim-grepper'
   let g:grepper = { 'tools': ['ag'] }
@@ -57,6 +58,9 @@ Plug 'christoomey/vim-tmux-navigator'
   nnoremap <silent> <c-k> :TmuxNavigateUp<cr>
   nnoremap <silent> <c-l> :TmuxNavigateRight<cr>
   nnoremap <silent> <c-p> :TmuxNavigatePrevious<cr>
+
+" Same thing but for kitty
+Plug 'knubie/vim-kitty-navigator', {'do': 'cp ./*.py ~/.config/kitty'}
 
 " Low-overhead language support
 Plug 'sheerun/vim-polyglot'

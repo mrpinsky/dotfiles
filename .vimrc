@@ -42,7 +42,7 @@ set splitright
 set splitbelow
 set mousehide
 set winminheight=0
-set number
+set relativenumber
 set noswapfile
 set expandtab
 set shiftwidth=2
@@ -93,8 +93,25 @@ nmap <leader>C c/[A-Z]<CR>
 nmap <leader>d df_
 nmap <leader>D d/[A-Z]<CR>
 
+nmap <Leader>g <Plug>(ale_go_to_definition)
+nmap <Leader>gt <Plug>(ale_go_to_definition_in_tab)
+nmap <Leader>gs <Plug>(ale_go_to_definition_in_split)
+nmap <Leader>gv <Plug>(ale_go_to_definition_in_vsplit)
+
+nmap <Leader>G <Plug>(ale_go_to_implementation)
+nmap <Leader>Gt <Plug>(ale_go_to_implementation_in_tab)
+nmap <Leader>Gs <Plug>(ale_go_to_implementation_in_split)
+nmap <Leader>Gv <Plug>(ale_go_to_implementation_in_vsplit)
+
+nmap <Leader>T <Plug>(ale_go_to_type_definition)
+nmap <Leader>Tt <Plug>(ale_go_to_type_definition_in_tab)
+nmap <Leader>Ts <Plug>(ale_go_to_type_definition_in_split)
+nmap <Leader>Tv <Plug>(ale_go_to_type_definition_in_vsplit)
+
+nmap <Leader>h <Plug>(ale_hover)
+
 "For these files, strip out trailing white space at the end of lines.
-" autocmd FileType cucumber,ruby,yaml,eruby,coffee,elm autocmd BufWritePre <buffer> :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\s\\+$","","")'))
+autocmd FileType cucumber,ruby,yaml,eruby,coffee,elm autocmd BufWritePre <buffer> :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\s\\+$","","")'))
 
 autocmd FileType elm,haskell,cs setlocal expandtab shiftwidth=4 softtabstop=4
 autocmd FileType haskell call HaskellSupport()
@@ -102,6 +119,7 @@ autocmd FileType ruby,javascript,c setlocal expandtab shiftwidth=2 softtabstop=2
 autocmd Filetype javascript,c,ruby call CStyleSyntaxHelpers()
 autocmd Filetype ruby,erb,haml call LoadRubyMaps()
 autocmd Filetype elixir call ElixirSupport()
+autocmd Filetype typescript setlocal noexpandtab
 
 function! HaskellSupport()
   nnoremap <Leader>ht :GhcModType<cr>
@@ -168,3 +186,8 @@ function! ToggleNumbers()
     set norelativenumber
   endif
 endfunction
+
+if has('nvim')
+  " Keep block cursor in insert mode
+  set guicursor=
+endif

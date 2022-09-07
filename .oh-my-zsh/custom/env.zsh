@@ -1,6 +1,8 @@
 export EDITOR=vim
 export BAT_THEME=ansi-light
 
+export HOMEBREW_CASK_OPTS="--appdir=~/Application"
+
 autoload zmv
 
 ### FZF

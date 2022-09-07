@@ -4,8 +4,14 @@ set -e
 
 git config --global --unset
 
+# Clean up kitty
+brew uninstall --cask kitty
+[[ -d ~/.config/kitty ]] && rm -rf ~/.config/kitty
+
 # Uninstall Vim Plug and plugs
 [[ -d ~/.vim ]] && rm -rf ~/.vim
+brew uninstall nvim
+[[-d ~/.config/nvim ]] && rm -rf ~/.config/nvim
 [[ -f ~/.vimrc ]] && rm ~/.vimrc
 
 # Uninstall FZF
