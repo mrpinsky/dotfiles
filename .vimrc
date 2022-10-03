@@ -42,7 +42,7 @@ set splitright
 set splitbelow
 set mousehide
 set winminheight=0
-set relativenumber
+set number
 set noswapfile
 set expandtab
 set shiftwidth=2
@@ -64,9 +64,7 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
 set wildignore+=*.swp,*~,._*
 set wildignore+=**/coverage/*,**/spec/reports/*,**/tmp/*,**/node_modules/*,**/build/*
 
-set guifont=Inconsolata_for_Powerline:h18
-let g:airline_theme = "sol"
-let g:airline_powerline_fonts = 1
+set guifont=Fira_Code:h18
 colorscheme nofrils-dark
 
 set ignorecase " searches are case insensitive
@@ -93,22 +91,29 @@ nmap <leader>C c/[A-Z]<CR>
 nmap <leader>d df_
 nmap <leader>D d/[A-Z]<CR>
 
-nmap <Leader>g <Plug>(ale_go_to_definition)
-nmap <Leader>gt <Plug>(ale_go_to_definition_in_tab)
-nmap <Leader>gs <Plug>(ale_go_to_definition_in_split)
-nmap <Leader>gv <Plug>(ale_go_to_definition_in_vsplit)
+nmap gd <Plug>(ale_go_to_definition)
+nmap td <Plug>(ale_go_to_definition_in_tab)
+nmap sd <Plug>(ale_go_to_definition_in_split)
+nmap vd <Plug>(ale_go_to_definition_in_vsplit)
 
-nmap <Leader>G <Plug>(ale_go_to_implementation)
-nmap <Leader>Gt <Plug>(ale_go_to_implementation_in_tab)
-nmap <Leader>Gs <Plug>(ale_go_to_implementation_in_split)
-nmap <Leader>Gv <Plug>(ale_go_to_implementation_in_vsplit)
+nmap gI <Plug>(ale_go_to_implementation)
+nmap tI <Plug>(ale_go_to_implementation_in_tab)
+nmap sI <Plug>(ale_go_to_implementation_in_split)
+nmap vI <Plug>(ale_go_to_implementation_in_vsplit)
 
-nmap <Leader>T <Plug>(ale_go_to_type_definition)
-nmap <Leader>Tt <Plug>(ale_go_to_type_definition_in_tab)
-nmap <Leader>Ts <Plug>(ale_go_to_type_definition_in_split)
-nmap <Leader>Tv <Plug>(ale_go_to_type_definition_in_vsplit)
+nmap gT <Plug>(ale_go_to_type_definition)
+nmap tT <Plug>(ale_go_to_type_definition_in_tab)
+nmap sT <Plug>(ale_go_to_type_definition_in_split)
+" There's a bug in ALE's plug mapping for this one
+nmap vT :ALEGoToTypeDefinition -vsplit<CR>
 
-nmap <Leader>h <Plug>(ale_hover)
+nmap grp :ALEFindReferences -relative<CR>
+nmap grq :ALEFindReferences -quickfix<CR>
+nmap gR :ALERepeatSelection<CR>
+nmap gh <Plug>(ale_hover)
+nmap ai <Plug>(ale_import)
+
+imap <C-n> <Plug>(ale_complete)
 
 "For these files, strip out trailing white space at the end of lines.
 autocmd FileType cucumber,ruby,yaml,eruby,coffee,elm autocmd BufWritePre <buffer> :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\s\\+$","","")'))
@@ -119,7 +124,7 @@ autocmd FileType ruby,javascript,c setlocal expandtab shiftwidth=2 softtabstop=2
 autocmd Filetype javascript,c,ruby call CStyleSyntaxHelpers()
 autocmd Filetype ruby,erb,haml call LoadRubyMaps()
 autocmd Filetype elixir call ElixirSupport()
-autocmd Filetype typescript setlocal noexpandtab
+autocmd Filetype typescript setlocal noexpandtab tabstop=2
 
 function! HaskellSupport()
   nnoremap <Leader>ht :GhcModType<cr>

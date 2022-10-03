@@ -1,3 +1,5 @@
+[core]
+	pager = less --tabs=2
 [push]
 	config = default
 	default = current
@@ -44,6 +46,7 @@
 	pull = pull --prune
 	unmerged = !git status --porcelain | grep -e '^U' -e '^.U' | cut -d' ' -f2
 	resolve = !vim $(git unmerged)
-	pick-commit = !git log --oneline --grep="^fixup" --invert-grep | fzf | cut -f1 -d' '
+	default-branch = !git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'
+	pick-commit = !git log --oneline --grep='^(fixup|squash)' --invert-grep origin/$(git default-branch).. | fzf | cut -f1 -d' '
 	fixup = !git commit --fixup=$(git pick-commit)
 	squash = !git commit --squash=$(git pick-commit)

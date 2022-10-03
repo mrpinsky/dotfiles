@@ -85,7 +85,10 @@ vim -u ~/dotfiles/plugs.vim -c PlugInstall -c qa &>/dev/null
 
 ### KITTY CONF ###
 echo KITTY CONF
-ln -sfv "$HOME/dotfiles/kitty" "$HOME/.config"
+mkdir -p "$HOME/.config/kitty"
+for file in $(ls "$HOME/dotfiles/kitty"); do
+  ln -sfv "$HOME/dotfiles/kitty/$file" "$HOME/.config/kitty/$file"
+done
 brew install --cask kitty
 
 echo GIT CONFIG

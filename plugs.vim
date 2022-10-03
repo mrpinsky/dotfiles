@@ -2,22 +2,12 @@
 call plug#begin()
 
 Plug 'robertmeta/nofrils'
-Plug 'vim-airline/vim-airline'
-  " Show branch foo/bar/baz as f/b/baz
-  let g:airline#extensions#branch#format = 2
-  " Limit branch display to 10-characters
-  let g:airline#extensions#branch#displayed_head_limit = 15
-  " Show linter status in airline bar
-  let g:airline#extensions#ale#enabled=1
+Plug 'w0rp/ale'
+  let g:ale_enabled=1
+  let g:ale_floating_preview=1
   " keep sign gutter open at all times
   let g:ale_sign_column_always=1
-  " Don't show file encoding & format if it's this string, since that's what we expect
-  let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
-  let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
-Plug 'vim-airline/vim-airline-themes'
-Plug 'w0rp/ale'
-let g:ale_enabled=1
-let g:ale_floating_preview=1
+  let g:ale_completion_enabled=1
 
 Plug 'mhinz/vim-grepper'
   let g:grepper = { 'tools': ['ag'] }

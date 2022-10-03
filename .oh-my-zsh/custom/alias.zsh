@@ -44,3 +44,6 @@ alias zln='noglob zmv -L'
 alias zsy='noglob zmv -Ls'
 
 alias vim=nvim
+
+alias light='ln -sF ~/.config/kitty/{kitty-themes/themes/3024_Day.conf,theme.conf}'
+alias dark='ln -sF ~/.config/kitty/{kitty-themes/themes/3024_Night.conf,theme.conf}'

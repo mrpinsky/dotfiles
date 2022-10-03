@@ -6,7 +6,11 @@ git config --global --unset
 
 # Clean up kitty
 brew uninstall --cask kitty
-[[ -d ~/.config/kitty ]] && rm -rf ~/.config/kitty
+if [[ -d ~/.config/kitty ]]; then
+  for file in $(ls "$HOME/dotfiles/kitty/"); do
+    rm "$HOME/dotfiles/kitty/$file"
+  done
+fi
 
 # Uninstall Vim Plug and plugs
 [[ -d ~/.vim ]] && rm -rf ~/.vim
