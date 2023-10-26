@@ -4,11 +4,11 @@ set -e
 
 git config --global --unset
 
-# Clean up kitty
-brew uninstall --cask kitty
-if [[ -d ~/.config/kitty ]]; then
-  for file in $(ls "$HOME/dotfiles/kitty/"); do
-    rm "$HOME/dotfiles/kitty/$file"
+# Clean up alacritty
+brew uninstall --cask alacritty
+if [[ -d ~/.config/alacritty ]]; then
+  for file in $(ls "$HOME/dotfiles/alacritty/"); do
+    rm "$HOME/dotfiles/alacritty/$file"
   done
 fi
 

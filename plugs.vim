@@ -2,12 +2,16 @@
 call plug#begin()
 
 Plug 'robertmeta/nofrils'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Hit my timebox for setting this up. Going back to Coc for now.
+" Plug 'neovim/nvim-lspconfig'
+
 Plug 'w0rp/ale'
   let g:ale_enabled=1
-  let g:ale_floating_preview=1
+  " let g:ale_floating_preview=1
   " keep sign gutter open at all times
   let g:ale_sign_column_always=1
-  let g:ale_completion_enabled=1
+  " let g:ale_completion_enabled=1
 
 Plug 'mhinz/vim-grepper'
   let g:grepper = { 'tools': ['ag'] }
@@ -49,14 +53,11 @@ Plug 'christoomey/vim-tmux-navigator'
   nnoremap <silent> <c-l> :TmuxNavigateRight<cr>
   nnoremap <silent> <c-p> :TmuxNavigatePrevious<cr>
 
-" Same thing but for kitty
-Plug 'knubie/vim-kitty-navigator', {'do': 'cp ./*.py ~/.config/kitty'}
-
 " Low-overhead language support
 Plug 'sheerun/vim-polyglot'
   " Disable weird Haskell indentation
   let g:haskell_indent_disable=1
-  let g:polyglot_disabled = ['groovy']
+  let g:polyglot_disabled = ['groovy', 'git']
 
 Plug 'fatih/vim-go'
 
@@ -77,9 +78,11 @@ Plug 'andrewradev/splitjoin.vim'
 Plug 'vim-scripts/greplace.vim'
 Plug 'vim-scripts/HTML-AutoCloseTag'
 
-" Uncomment if I need to run RSpec often at Square
-Plug 'thoughtbot/vim-rspec'
-  let g:rspec_command = "Dispatch bundle exec rspec {spec}"
-  let g:rspec_runner = "os_x_iterm"
+Plug 'github/copilot.vim'
+
+" Uncomment if I need to run RSpec often
+" Plug 'thoughtbot/vim-rspec'
+"   let g:rspec_command = "Dispatch bundle exec rspec {spec}"
+"   let g:rspec_runner = "os_x_iterm"
 
 call plug#end()

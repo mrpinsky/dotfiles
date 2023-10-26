@@ -10,7 +10,7 @@ alias bes="bundle exec foreman start"
 alias dc="docker-compose"
 
 alias git="$(brew --prefix)/bin/git"
-alias g=git
+alias g="GIT_CURL_VERBOSE=1 GIT_TRACE=1 git"
 alias grm="git rebase origin/master"
 alias grmi="git rebase origin/master -i"
 alias gfrm="git fetch && git rebase origin/master"

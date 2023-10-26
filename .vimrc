@@ -35,6 +35,10 @@ if has('langmap') && exists('+langnoremap')
   set langnoremap
 endif
 
+""""""""""""""""""""""""""""""
+"       settings             "
+""""""""""""""""""""""""""""""
+
 " Use Vim settings, rather than Vi
 " This must be first, because it changes other options as a side effect
 set nocompatible
@@ -46,9 +50,11 @@ set number
 set noswapfile
 set expandtab
 set shiftwidth=2
+set tabstop=2
 set softtabstop=2
 set textwidth=80
 set list
+set nohlsearch
 
 if expand('%:e') =~ "zsh-theme"
   set ft=zsh
@@ -72,6 +78,13 @@ set smartcase  " ... unless they contain at least one captial letter
 
 set iskeyword+=- " add dash to keywords (used in motions)
 
+" coc.nvim suggestions
+source ~/dotfiles/coc-settings.vim
+
+""""""""""""""""""""""""""""""
+"       Mappings             "
+""""""""""""""""""""""""""""""
+
 " gp selects last paste
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
@@ -80,9 +93,9 @@ vnoremap p gpvy
 
 " FZF Bindings
 nnoremap <leader>t :Files<CR>
-nnoremap <leader>a :Ag<CR>
+" nnoremap <leader>a :Ag<CR>
 
-nnoremap <C-n> :call ToggleNumbers()<CR>
+" nnoremap <C-n> :call ToggleNumbers()<CR>
 
 nnoremap s :Git<CR>
 
@@ -90,30 +103,31 @@ nmap <leader>c ct_
 nmap <leader>C c/[A-Z]<CR>
 nmap <leader>d df_
 nmap <leader>D d/[A-Z]<CR>
+nmap <leader>T ?\n\n[A-Z]<CR>
 
-nmap gd <Plug>(ale_go_to_definition)
-nmap td <Plug>(ale_go_to_definition_in_tab)
-nmap sd <Plug>(ale_go_to_definition_in_split)
-nmap vd <Plug>(ale_go_to_definition_in_vsplit)
+" nmap gd <Plug>(ale_go_to_definition)
+" nmap td <Plug>(ale_go_to_definition_in_tab)
+" nmap sd <Plug>(ale_go_to_definition_in_split)
+" nmap vd <Plug>(ale_go_to_definition_in_vsplit)
 
-nmap gI <Plug>(ale_go_to_implementation)
-nmap tI <Plug>(ale_go_to_implementation_in_tab)
-nmap sI <Plug>(ale_go_to_implementation_in_split)
-nmap vI <Plug>(ale_go_to_implementation_in_vsplit)
+" nmap gI <Plug>(ale_go_to_implementation)
+" nmap tI <Plug>(ale_go_to_implementation_in_tab)
+" nmap sI <Plug>(ale_go_to_implementation_in_split)
+" nmap vI <Plug>(ale_go_to_implementation_in_vsplit)
 
-nmap gT <Plug>(ale_go_to_type_definition)
-nmap tT <Plug>(ale_go_to_type_definition_in_tab)
-nmap sT <Plug>(ale_go_to_type_definition_in_split)
-" There's a bug in ALE's plug mapping for this one
-nmap vT :ALEGoToTypeDefinition -vsplit<CR>
+" nmap gT <Plug>(ale_go_to_type_definition)
+" nmap tT <Plug>(ale_go_to_type_definition_in_tab)
+" nmap sT <Plug>(ale_go_to_type_definition_in_split)
+" " There's a bug in ALE's plug mapping for this one
+" nmap vT :ALEGoToTypeDefinition -vsplit<CR>
 
-nmap grp :ALEFindReferences -relative<CR>
-nmap grq :ALEFindReferences -quickfix<CR>
-nmap gR :ALERepeatSelection<CR>
-nmap gh <Plug>(ale_hover)
-nmap ai <Plug>(ale_import)
+" nmap grp :ALEFindReferences -relative<CR>
+" nmap grq :ALEFindReferences -quickfix<CR>
+" nmap gR :ALERepeatSelection<CR>
+" nmap gh <Plug>(ale_hover)
+" nmap ai <Plug>(ale_import)
 
-imap <C-n> <Plug>(ale_complete)
+" imap <C-n> <Plug>(ale_complete)
 
 "For these files, strip out trailing white space at the end of lines.
 autocmd FileType cucumber,ruby,yaml,eruby,coffee,elm autocmd BufWritePre <buffer> :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\s\\+$","","")'))
@@ -124,7 +138,12 @@ autocmd FileType ruby,javascript,c setlocal expandtab shiftwidth=2 softtabstop=2
 autocmd Filetype javascript,c,ruby call CStyleSyntaxHelpers()
 autocmd Filetype ruby,erb,haml call LoadRubyMaps()
 autocmd Filetype elixir call ElixirSupport()
+" Needs to be autocmd to override some settings in
+" /usr/share/vim/vim90/ftplugin/gitcommit.vim
+autocmd FileType gitcommit setlocal tabstop=2
+" For Notion
 autocmd Filetype typescript setlocal noexpandtab tabstop=2
+autocmd Filetype typescript,typescriptreact call NotionHelpers()
 
 function! HaskellSupport()
   nnoremap <Leader>ht :GhcModType<cr>
@@ -165,6 +184,17 @@ function! ExUnitDispatch()
   " nnoremap <Leader>L :Dispatch bin/rspec <C-r>=expand("%:p")<CR> --only-failures --fail-fast --format doc<CR>
 endfunction
 
+function! NotionHelpers()
+  nnoremap <Leader>S :Dispatch notion test <C-r>=expand("%:p")<CR><CR>
+  nnoremap <Leader>I :Dispatch notion test --inspect <C-r>=expand("%:p")<CR><CR>
+  nnoremap <Leader>P :Dispatch npx playwright test --reporter=line <C-r>=expand("%:p")<CR> --headed<CR>
+  " Jump backward to next function declaration
+  nnoremap <Leader>F ?\(export \)\?\(async \)\?function\*\? \w*(<CR>
+  " nnoremap <Leader>D :Dispatch npx playwright test --reporter=line <C-r>=expand("%:p")<CR> --debug<CR>
+  command! -nargs=0 Lint :w | !notion eslint --fix -- %
+  command! -nargs=0 Flush :!notion flush-memcached
+endfunction
+
 function! LoadRubyMaps()
   " " ,b remote pry
   " nnoremap <Leader>b Orequire 'pry'; binding.remote_pry<ESC>
@@ -196,3 +226,6 @@ if has('nvim')
   " Keep block cursor in insert mode
   set guicursor=
 endif
+
+set statusline=%f%m%=[%l,%v]\ 
+set formatoptions=jcroq/

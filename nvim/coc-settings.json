@@ -1,0 +1,7 @@
+{
+  "coc.preferences.formatOnSaveFiletypes": ["typescript", "typescriptreact"],
+  "coc.source.buffer.enable": false,
+  "tsserver.log": "verbose",
+  "tsserver.trace.server": "verbose",
+  "tsserver.maxTsServerMemory" : 16384
+}

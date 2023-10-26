@@ -83,13 +83,13 @@ echo VIM PLUG
 echo PLUG INSTALL
 vim -u ~/dotfiles/plugs.vim -c PlugInstall -c qa &>/dev/null
 
-### KITTY CONF ###
-echo KITTY CONF
-mkdir -p "$HOME/.config/kitty"
-for file in $(ls "$HOME/dotfiles/kitty"); do
-  ln -sfv "$HOME/dotfiles/kitty/$file" "$HOME/.config/kitty/$file"
+### ALACRITTY CONF ###
+echo ALACRITTY CONF
+mkdir -p "$HOME/.config/alacritty"
+for file in $(ls "$HOME/dotfiles/alacritty"); do
+  ln -sfv "$HOME/dotfiles/alacritty/$file" "$HOME/.config/alacritty/$file"
 done
-brew install --cask kitty
+brew install --cask alacritty
 
 echo GIT CONFIG
 git config --global --add include.path "$HOME/dotfiles/gitconfig"
