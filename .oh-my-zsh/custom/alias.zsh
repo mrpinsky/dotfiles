@@ -17,7 +17,7 @@ alias gfrm="git fetch && git rebase origin/master"
 alias gfrmi="git fetch && git rebase origin/master -i"
 alias gv="g hist | vim -R -c 'set filetype=git' -"
 alias gss="git rev-parse --short head 2> /dev/null"
-alias reviewer='gh api --paginate repos/:owner/:repo/collaborators | jq ".[].login" | tr -d \" | fzf'
+alias reviewer='gh api --paginate repos/:owner/:repo/contributors | jq ".[].login" | tr -d \" | fzf -m | paste -sd, -'
 
 alias gig=gigalixir
 
@@ -44,6 +44,7 @@ alias zln='noglob zmv -L'
 alias zsy='noglob zmv -Ls'
 
 alias vim=nvim
+alias v='vim $(fzf -m)'
 
 alias light='ln -sF ~/.config/kitty/{kitty-themes/themes/3024_Day.conf,theme.conf}'
 alias dark='ln -sF ~/.config/kitty/{kitty-themes/themes/3024_Night.conf,theme.conf}'

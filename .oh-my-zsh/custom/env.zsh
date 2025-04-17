@@ -1,5 +1,5 @@
 export EDITOR=vim
-export BAT_THEME=ansi-light
+export BAT_THEME=ansi
 
 export HOMEBREW_CASK_OPTS="--appdir=~/Application"
 

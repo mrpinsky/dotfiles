@@ -1,7 +1,8 @@
 {
-  "coc.preferences.formatOnSaveFiletypes": ["typescript", "typescriptreact"],
+  "coc.preferences.formatOnSave": true,
   "coc.source.buffer.enable": false,
   "tsserver.log": "verbose",
   "tsserver.trace.server": "verbose",
-  "tsserver.maxTsServerMemory" : 16384
+  "tsserver.maxTsServerMemory" : 16384,
+  "eslint.autoFixOnSave": true
 }

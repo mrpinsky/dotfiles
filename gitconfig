@@ -1,8 +1,15 @@
 [core]
-	pager = less --tabs=2
+	pager = delta
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true
+	line-numbers = true
+	side-by-side = false
 [push]
 	config = default
 	default = current
+	autoSetupRemote = true
 [diff]
 	renames = true
 	indentHeuristic = on
@@ -12,6 +19,7 @@
 	autosetupmerge = true
 [merge]
 	summary = true
+	conflictstyle = zdiff3
 [rebase]
 	autosquash = true
 	autostash = true
@@ -42,15 +50,25 @@
 	caa = commit --amend --all
 	co = checkout
 	last = show --pretty=fuller
-	cleanup-branches = !git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -n 1 git branch -D
 	pf = push --force-with-lease
 	st = status
-	unmerged = !git status --porcelain | grep -e '^U' -e '^.U' | cut -d' ' -f2
-	resolve = !vim $(git unmerged)
-	default-branch = !git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'
-	pick-commit = !git log --oneline --grep='^(fixup|squash)' --invert-grep origin/$(git default-branch).. | fzf | cut -f1 -d' '
 	fixup = !git commit --fixup=$(git pick-commit)
 	squash = !git commit --squash=$(git pick-commit)
 	p = !git pull --rebase && git cleanup-branches
-	prom = !git fetch && git cleanup-branches && git rebase origin/main
-	comb = !git checkout $(git branch -l 'njp/*' | grep -v '^*' | fzf)
+	prom = !git fetch && git cleanup-branches && git rebase origin/$(git default-branch)
+	comb = !git checkout $(git pick-my-branch)
+	dom = !git diff $(git default-branch) --merge-base
+	dmb = !git br -d $(git pick-my-branch --multi)
+	Dmb = !git br -D $(git pick-my-branch --multi)
+	pmb = pick-my-branch
+	prb = pick-remote-branch
+	pab = pick-any-branch
+	main = !git checkout main && git pull --rebase && git cleanup-branches
+	cleanup-branches = !git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -n 1 git branch -D
+	unmerged = !git status --porcelain | grep -e '^U' -e '^.U' | cut -d' ' -f2
+	resolve = !git unmerged | tr '\n' ' ' | xargs vim
+	default-branch = !git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'
+	pick-commit = !git log --oneline --grep='^\\(fixup\\|squash\\)' --invert-grep origin/$(git default-branch).. | fzf | cut -f1 -d' '
+	pick-my-branch = !git branch -l 'njp/*' | grep -v '^*' | fzf
+	pick-remote-branch = !git branch -l 'njp/*' | grep -v '^*' | fzf
+	pick-any-branch = !git branch -l | grep -v '^*' | fzf

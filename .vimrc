@@ -71,7 +71,8 @@ set wildignore+=*.swp,*~,._*
 set wildignore+=**/coverage/*,**/spec/reports/*,**/tmp/*,**/node_modules/*,**/build/*
 
 set guifont=Fira_Code:h18
-colorscheme nofrils-dark
+colorscheme quiet
+set background=dark
 
 set ignorecase " searches are case insensitive
 set smartcase  " ... unless they contain at least one captial letter
@@ -185,7 +186,7 @@ function! ExUnitDispatch()
 endfunction
 
 function! NotionHelpers()
-  nnoremap <Leader>S :Dispatch notion test <C-r>=expand("%:p")<CR><CR>
+  nnoremap <Leader>S :Dispatch notion test --consoleLogLevel=debug <C-r>=expand("%:p")<CR><CR>
   nnoremap <Leader>I :Dispatch notion test --inspect <C-r>=expand("%:p")<CR><CR>
   nnoremap <Leader>P :Dispatch npx playwright test --reporter=line <C-r>=expand("%:p")<CR> --headed<CR>
   " Jump backward to next function declaration

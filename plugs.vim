@@ -80,6 +80,14 @@ Plug 'vim-scripts/HTML-AutoCloseTag'
 
 Plug 'github/copilot.vim'
 
+Plug 'itspriddle/vim-shellcheck'
+
+" I couldn't get the Lua to enable Copilot Chat to work. It worked once and has
+" been throwing an error since.
+" Plug 'zbirenbaum/copilot.lua'
+" Plug 'nvim-lua/plenary.nvim'
+" Plug 'CopilotC-Nvim/CopilotChat.nvim', { 'branch': 'canary' }
+
 " Uncomment if I need to run RSpec often
 " Plug 'thoughtbot/vim-rspec'
 "   let g:rspec_command = "Dispatch bundle exec rspec {spec}"
